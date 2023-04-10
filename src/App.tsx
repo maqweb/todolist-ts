@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react'
+import React, {useCallback, useEffect} from 'react'
 import './App.css';
 import {Todolist} from './Todolist';
 import {AddItemForm} from './AddItemForm';
@@ -15,6 +15,7 @@ import {
     addTodolistAC,
     changeTodolistFilterAC,
     changeTodolistTitleAC,
+    fetchTodolistTC,
     FilterValuesType,
     removeTodolistAC,
     TodolistDomainType
@@ -30,6 +31,10 @@ export type TasksStateType = {
 }
 
 function App() {
+
+    useEffect(() => {
+        dispatch(fetchTodolistTC())
+    }, [])
 
     const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
