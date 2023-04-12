@@ -82,14 +82,14 @@ export const todolistsReducer = (state: Array<TodolistDomainType> = initialState
 export const removeTodolistAC = (todolistId: string): RemoveTodolistActionType => {
     return {type: 'REMOVE-TODOLIST', id: todolistId}
 }
-export const addTodolistAC = (title: string): AddTodolistActionType => {
-    return {type: 'ADD-TODOLIST', title: title, todolistId: v1()}
+export const addTodolistAC = (title: string, todolistId: string): AddTodolistActionType => {
+    return {type: 'ADD-TODOLIST', title, todolistId}
 }
 export const changeTodolistTitleAC = (id: string, title: string): ChangeTodolistTitleActionType => {
-    return {type: 'CHANGE-TODOLIST-TITLE', id: id, title: title}
+    return {type: 'CHANGE-TODOLIST-TITLE', id, title}
 }
 export const changeTodolistFilterAC = (id: string, filter: FilterValuesType): ChangeTodolistFilterActionType => {
-    return {type: 'CHANGE-TODOLIST-FILTER', id: id, filter: filter}
+    return {type: 'CHANGE-TODOLIST-FILTER', id, filter}
 }
 export const setTodolistsAC = (todolists: Array<TodolistType>): SetTodolistsActionType => {
     return {type: 'SET-TODOLISTS', todolists}
@@ -101,7 +101,28 @@ export const fetchTodolistTC = (): any => (dispatch: Dispatch) => {
         .then((res) => {
             dispatch(setTodolistsAC(res.data))
         })
+}
 
+export const removeTodolistTc = (todolistId: string): any => (dispatch: Dispatch) => {
+    todolistAPI.deleteTodolist(todolistId)
+        .then((res) => {
+            dispatch(removeTodolistAC(todolistId))
+        })
+}
+
+export const createTodolistTC = (title: string): any => (dispatch: Dispatch) => {
+    todolistAPI.createTodolist(title)
+        .then((res) => {
+            const todolist = res.data.data.item
+            dispatch(addTodolistAC(title, todolist.id))
+        })
+}
+
+export const updateTodolistTitleTC = (todolistId: string, title: string): any => (dispatch: Dispatch) => {
+    todolistAPI.updateTodolist(todolistId, title)
+        .then((res) => {
+            dispatch(changeTodolistTitleAC(todolistId, title))
+        })
 }
 
 
