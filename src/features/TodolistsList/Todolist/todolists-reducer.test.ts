@@ -7,7 +7,7 @@ import {
     todolistsReducer
 } from './todolists-reducer'
 import {v1} from 'uuid'
-import {TodolistType} from "../../api/todolist-api";
+import {TodolistType} from "../../../api/todolist-api";
 
 
 let todolistId1: string
@@ -18,8 +18,8 @@ beforeEach(() => {
     todolistId1 = v1();
     todolistId2 = v1();
     startState = [
-        {id: todolistId1, title: 'What to learn', filter: 'all', order: 0, addedDate: ''},
-        {id: todolistId2, title: 'What to repeat', filter: 'all', order: 0, addedDate: ''}
+        {id: todolistId1, title: 'What to learn', filter: 'all', order: 0, addedDate: '', entityStatus: "idle"},
+        {id: todolistId2, title: 'What to repeat', filter: 'all', order: 0, addedDate: '', entityStatus: "idle"}
     ]
 })
 

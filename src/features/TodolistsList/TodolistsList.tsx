@@ -4,13 +4,13 @@ import {
     createTodolistTC,
     fetchTodolistTC,
     FilterValuesType,
-    removeTodolistTc,
+    removeTodolistTC,
     TodolistDomainType,
     updateTodolistTitleTC
-} from "./todolists-reducer";
+} from "./Todolist/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../app/store";
-import {addTaskTC, removeTaskTC, TasksStateType, updateTaskModelTC} from "./tasks-reducer";
+import {addTaskTC, removeTaskTC, TasksStateType, updateTaskModelTC} from "./Todolist/Task/tasks-reducer";
 import {TaskStatuses} from "../../api/todolist-api";
 import Grid from "@mui/material/Grid";
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
@@ -48,7 +48,7 @@ export const TodolistsList: React.FC = () => {
     }, []);
 
     const removeTodolist = useCallback(function (id: string) {
-        dispatch(removeTodolistTc(id))
+        dispatch(removeTodolistTC(id))
     }, []);
 
     const changeTodolistTitle = useCallback(function (todolistId: string, title: string) {
@@ -83,6 +83,7 @@ export const TodolistsList: React.FC = () => {
                                 removeTodolist={removeTodolist}
                                 changeTaskTitle={changeTaskTitle}
                                 changeTodolistTitle={changeTodolistTitle}
+                                entityStatus={tl.entityStatus}
                             />
                         </Paper>
                     </Grid>

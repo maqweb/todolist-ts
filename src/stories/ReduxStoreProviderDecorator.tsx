@@ -1,10 +1,10 @@
 import React from 'react'
 import {Provider} from 'react-redux'
-import {combineReducers, createStore} from 'redux'
+import {combineReducers, createStore, legacy_createStore} from 'redux'
 import {v1} from 'uuid'
 import {AppRootStateType} from '../app/store'
-import {tasksReducer} from '../features/TodolistsList/tasks-reducer'
-import {todolistsReducer} from '../features/TodolistsList/todolists-reducer'
+import {tasksReducer} from '../features/TodolistsList/Todolist/Task/tasks-reducer'
+import {todolistsReducer} from '../features/TodolistsList/Todolist/todolists-reducer'
 import {TaskStatuses} from "../api/todolist-api";
 
 
@@ -15,8 +15,8 @@ const rootReducer = combineReducers({
 
 const initialGlobalState: AppRootStateType = {
     todolists: [
-        {id: 'todolistId1', title: 'What to learn', filter: 'all', addedDate: '', order: 0},
-        {id: 'todolistId2', title: 'What to buy', filter: 'all', addedDate: '', order: 0}
+        {id: 'todolistId1', title: 'What to learn', filter: 'all', addedDate: '', order: 0, entityStatus: "idle"},
+        {id: 'todolistId2', title: 'What to buy', filter: 'all', addedDate: '', order: 0, entityStatus: "idle"}
     ],
     tasks: {
         ['todolistId1']: [
@@ -71,10 +71,14 @@ const initialGlobalState: AppRootStateType = {
                 description: ''
             }
         ]
+    },
+    app: {
+        status: "loading",
+        error: false
     }
 }
 
-export const storyBookStore = createStore(rootReducer, initialGlobalState)
+export const storyBookStore = legacy_createStore(rootReducer, initialGlobalState)
 
 export const ReduxStoreProviderDecorator = (storyFn: any) => (
     <Provider
