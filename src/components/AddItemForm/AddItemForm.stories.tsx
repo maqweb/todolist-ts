@@ -2,7 +2,7 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { action } from '@storybook/addon-actions'
 
-import {AddItemForm} from '../AddItemForm';
+import {AddItemForm} from './AddItemForm';
 
 export default {
 	title: 'Todolist/AddItemForm',
