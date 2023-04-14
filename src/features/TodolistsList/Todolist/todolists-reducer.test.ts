@@ -7,7 +7,7 @@ import {
     todolistsReducer
 } from './todolists-reducer'
 import {v1} from 'uuid'
-import {TodolistType} from "../../../api/todolist-api";
+import { TodolistType } from './Task/tasks-reducer'
 
 
 let todolistId1: string

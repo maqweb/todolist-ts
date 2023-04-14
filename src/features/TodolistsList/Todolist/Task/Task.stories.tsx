@@ -3,7 +3,7 @@ import {ComponentStory, ComponentMeta} from '@storybook/react';
 import {action} from '@storybook/addon-actions'
 
 import {Task} from './Task';
-import { TaskStatuses } from '../../../../api/todolist-api';
+import {TaskStatuses} from "./tasks-reducer";
 
 export default {
     title: 'Todolist/Task',
@@ -13,6 +13,9 @@ export default {
 const changeStatusCallback = action("Status changed");
 const removeTaskCallback = action("Remove task");
 const updateTaskTitleCallback = action("Update task title");
+const entityStatusLoading = 'loading'
+const entityStatus = 'idle'
+
 
 const Template: ComponentStory<typeof Task> = (props) =>
     <>
@@ -31,9 +34,10 @@ const Template: ComponentStory<typeof Task> = (props) =>
                 completed: false,
                 todoListId: 'todoListId1',
                 priority: 0,
-                deadline: ''
+                deadline: '',
             }}
             todolistId={'todolistId1'}
+            entityStatus={entityStatusLoading}
         />
         <Task
             changeTaskStatus={changeStatusCallback}
@@ -53,6 +57,7 @@ const Template: ComponentStory<typeof Task> = (props) =>
                 deadline: ''
             }}
             todolistId={'todolistId2'}
+            entityStatus={entityStatus}
         />
     </>
 

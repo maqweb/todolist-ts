@@ -10,8 +10,7 @@ import {
 } from "./Todolist/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../app/store";
-import {addTaskTC, removeTaskTC, TasksStateType, updateTaskModelTC} from "./Todolist/Task/tasks-reducer";
-import {TaskStatuses} from "../../api/todolist-api";
+import {addTaskTC, removeTaskTC, TasksStateType, TaskStatuses, updateTaskModelTC} from "./Todolist/Task/tasks-reducer";
 import Grid from "@mui/material/Grid";
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import Paper from "@mui/material/Paper";

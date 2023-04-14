@@ -5,11 +5,11 @@ import Button from '@mui/material/Button';
 import {Delete} from '@mui/icons-material';
 import {Task} from './Task/Task'
 import EditableSpan from "../../../components/EditableSpan/EditableSpan";
-import {TaskStatuses, TasksType} from '../../../api/todolist-api';
 import {FilterValuesType} from './todolists-reducer';
-import {fetchTasksTC} from "./Task/tasks-reducer";
-import {useDispatch} from "react-redux";
+import {fetchTasksTC, TaskStatuses, TasksType} from "./Task/tasks-reducer";
+import {useDispatch, useSelector} from "react-redux";
 import {RequestStatusType} from "../../../app/app-reducer";
+import {AppRootStateType} from "../../../app/store";
 
 
 type PropsType = {
@@ -28,8 +28,8 @@ type PropsType = {
 }
 
 export const Todolist = React.memo(function (props: PropsType) {
-    const dispatch = useDispatch()
 
+    const dispatch = useDispatch()
     useEffect(() => {
         dispatch(fetchTasksTC(props.id))
     }, [])
@@ -49,7 +49,6 @@ export const Todolist = React.memo(function (props: PropsType) {
     const onAllClickHandler = useCallback(() => props.changeFilter('all', props.id), [props.id, props.changeFilter])
     const onActiveClickHandler = useCallback(() => props.changeFilter('active', props.id), [props.id, props.changeFilter])
     const onCompletedClickHandler = useCallback(() => props.changeFilter('completed', props.id), [props.id, props.changeFilter])
-
 
     let tasksForTodolist = props.tasks
 
@@ -77,7 +76,9 @@ export const Todolist = React.memo(function (props: PropsType) {
                         removeTask={props.removeTask}
                         changeTaskTitle={props.changeTaskTitle}
                         changeTaskStatus={props.changeTaskStatus}
-                    />))
+                        entityStatus={props.entityStatus}
+                    />
+                ))
             }
         </div>
         <div style={{paddingTop: '10px'}}>
