@@ -9,6 +9,12 @@ const instance = axios.create({
 	},
 })
 
+export const authAPI = {
+	login() {
+		return instance.post(`/auth/login`, {email: 'free@samuraijs.com', password: 'free', rememberMe: true, captcha: true})
+	},
+}
+
 // api
 export const todolistAPI = {
 	getTodolists() {

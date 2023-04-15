@@ -52,8 +52,6 @@ export const setTasksAC = (todolistId: string, tasks: Array<TasksType>) =>
     ({type: 'SET-TASKS', todolistId, tasks} as const)
 export const updateTaskAC = (todolistId: string, taskId: string, model: UpdateTaskModelType) =>
     ({type: 'UPDATE-TASK', todolistId, taskId, model} as const)
-export const changeTaskEntityStatusAC = (todolistId: string, taskId: string, status: RequestStatusType) =>
-    ({type: 'CHANGE-TASK-ENTITY-STATUS', todolistId, taskId, status} as const)
 
 // thunks
 export const fetchTasksTC = (todolistId: string): any => (dispatch: Dispatch<TasksActionsType>) => {
@@ -194,7 +192,6 @@ export type TasksActionsType =
     | ReturnType<typeof setTasksAC>
     | ReturnType<typeof setTodolistsAC>
     | ReturnType<typeof updateTaskAC>
-    | ReturnType<typeof changeTaskEntityStatusAC>
     | ApplicationActionsType
 
 
