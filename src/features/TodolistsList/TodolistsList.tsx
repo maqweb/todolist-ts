@@ -15,13 +15,19 @@ import Grid from "@mui/material/Grid";
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import Paper from "@mui/material/Paper";
 import {Todolist} from "./Todolist/Todolist";
+import {Navigate} from "react-router-dom";
 
 export const TodolistsList: React.FC = () => {
 
     useEffect(() => {
+        if (!isLogin) {
+            return
+        }
+
         dispatch(fetchTodolistTC())
     }, [])
 
+    const isLogin = useSelector<AppRootStateType>(state => state.auth.isLoggedIn)
     const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
     const dispatch = useDispatch();
@@ -29,35 +35,31 @@ export const TodolistsList: React.FC = () => {
     const removeTask = useCallback(function (id: string, todolistId: string) {
         dispatch(removeTaskTC(id, todolistId));
     }, []);
-
     const addTask = useCallback(function (title: string, todolistId: string) {
         dispatch(addTaskTC(todolistId, title));
     }, []);
-
     const changeStatus = useCallback(function (todolistId: string, taskId: string, status: TaskStatuses,) {
         dispatch(updateTaskModelTC(todolistId, taskId, {status}));
     }, []);
-
     const changeTaskTitle = useCallback(function (todolistId: string, taskId: string, title: string,) {
         dispatch(updateTaskModelTC(todolistId, taskId, {title}));
     }, []);
-
     const changeFilter = useCallback(function (value: FilterValuesType, todolistId: string) {
         dispatch(changeTodolistFilterAC(todolistId, value));
     }, []);
-
     const removeTodolist = useCallback(function (id: string) {
         dispatch(removeTodolistTC(id))
     }, []);
-
     const changeTodolistTitle = useCallback(function (todolistId: string, title: string) {
         dispatch(updateTodolistTitleTC(todolistId, title));
     }, []);
-
     const addTodolist = useCallback((title: string) => {
         dispatch(createTodolistTC(title))
     }, [dispatch]);
 
+    if (!isLogin) {
+        return <Navigate to={'/login'}/>
+    }
 
     return <>
         <Grid container style={{padding: '20px'}}>

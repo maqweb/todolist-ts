@@ -74,6 +74,9 @@ const initialGlobalState: AppRootStateType = {
     app: {
         status: "loading",
         error: false
+    },
+    auth: {
+        isLoggedIn: false
     }
 }
 

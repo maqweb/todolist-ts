@@ -53,6 +53,7 @@ export const setTasksAC = (todolistId: string, tasks: Array<TasksType>) =>
 export const updateTaskAC = (todolistId: string, taskId: string, model: UpdateTaskModelType) =>
     ({type: 'UPDATE-TASK', todolistId, taskId, model} as const)
 
+
 // thunks
 export const fetchTasksTC = (todolistId: string): any => (dispatch: Dispatch<TasksActionsType>) => {
     dispatch(setAppStatusAC('loading'))
