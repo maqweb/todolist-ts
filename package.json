@@ -1,6 +1,6 @@
 {
   "name": "todolists",
-  "homepage": "https://maqweb.github.io/todolists-ts",
+  "homepage": "https://maqweb.github.io/todolist-ts",
   "version": "0.1.0",
   "private": true,
   "jest": {
