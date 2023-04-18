@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useCallback, useEffect} from 'react'
 import './App.css';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -8,35 +8,50 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import {Menu} from '@mui/icons-material';
 import {TodolistsList} from "../features/TodolistsList/TodolistsList";
-import {LinearProgress} from "@mui/material";
+import {CircularProgress, LinearProgress} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./store";
 import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
 import {Routes, Route, BrowserRouter, Navigate} from 'react-router-dom'
 import {Login} from "../features/Login/Login";
-import { initializeAppTC } from '../features/Login/auth-reducer';
+import {initializeAppTC, logoutTC} from '../features/Login/auth-reducer';
 
 function App() {
 
     const status = useSelector<AppRootStateType>(state => state.app.status)
+    const isInitialized = useSelector<AppRootStateType>(state => state.app.initialized)
+    const isLoggedIn = useSelector<AppRootStateType>(state => state.auth.isLoggedIn)
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(initializeAppTC())
     }, [])
+
+    const logoutHandler = useCallback(() => {
+        dispatch(logoutTC())
+    }, [])
+
+    if (!isInitialized) {
+        return <div
+            style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
+            <CircularProgress/>
+        </div>
+    }
     return (
         <BrowserRouter>
             <div className="App">
                 <ErrorSnackbar/>
                 <AppBar position="static">
                     <Toolbar>
-                        <IconButton edge="start" color="inherit" aria-label="menu">
-                            <Menu/>
-                        </IconButton>
-                        <Typography variant="h6">
-                            News
-                        </Typography>
-                        <Button color="inherit">Login</Button>
+                        <>
+                            <IconButton edge="start" color="inherit" aria-label="menu">
+                                <Menu/>
+                            </IconButton>
+                            <Typography variant="h6">
+                                News
+                            </Typography>
+                            {isLoggedIn && <Button color="inherit" onClick={logoutHandler}>Log out</Button>}
+                        </>
                     </Toolbar>
                     {status === 'loading' && <LinearProgress/>}
                 </AppBar>
@@ -44,8 +59,8 @@ function App() {
                     <Routes>
                         <Route path={'/'} element={<TodolistsList/>}/>
                         <Route path={'/login'} element={<Login/>}/>
-                        <Route path='/404' element={<h1>404: PAGE NOT FOUND</h1>} />
-                        <Route path='*' element={<Navigate to={'/404'}/>} />
+                        <Route path='/404' element={<h1>404: PAGE NOT FOUND</h1>}/>
+                        <Route path='*' element={<Navigate to={'/404'}/>}/>
                     </Routes>
                 </Container>
             </div>

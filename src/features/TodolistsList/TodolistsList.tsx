@@ -20,14 +20,14 @@ import {Navigate} from "react-router-dom";
 export const TodolistsList: React.FC = () => {
 
     useEffect(() => {
-        if (!isLogin) {
+        if (!isLoggedIn) {
             return
         }
 
         dispatch(fetchTodolistTC())
     }, [])
 
-    const isLogin = useSelector<AppRootStateType>(state => state.auth.isLoggedIn)
+    const isLoggedIn = useSelector<AppRootStateType>(state => state.auth.isLoggedIn)
     const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
     const dispatch = useDispatch();
@@ -57,7 +57,7 @@ export const TodolistsList: React.FC = () => {
         dispatch(createTodolistTC(title))
     }, [dispatch]);
 
-    if (!isLogin) {
+    if (!isLoggedIn) {
         return <Navigate to={'/login'}/>
     }
 

@@ -40,7 +40,7 @@ const validate = (values: FormikErrorType) => {
 
 export const Login = () => {
 
-    const isLogin = useSelector<AppRootStateType>(state => state.auth.isLoggedIn)
+    const isLoggedIn = useSelector<AppRootStateType>(state => state.auth.isLoggedIn)
 
     const dispatch = useDispatch()
     const formik = useFormik({
@@ -58,7 +58,7 @@ export const Login = () => {
         },
     })
 
-    if (isLogin) {
+    if (isLoggedIn) {
         return <Navigate to={'/'}/>
     }
 
