@@ -21,51 +21,49 @@ export const setIsLoggedInAC = (value: boolean) =>
     ({type: 'login/SET-IS-LOGGED-IN', value} as const)
 
 // thunks
-export const loginTC = (data: LoginType): any => (dispatch: Dispatch<AuthActionsType>) => {
+export const loginTC = (data: LoginType): any => async (dispatch: Dispatch<AuthActionsType>) => {
     dispatch(setAppStatusAC('loading'))
-    authAPI.login(data)
-        .then(res => {
-            if (res.data.resultCode === 0) {
-                dispatch(setIsLoggedInAC(true))
-                dispatch(setAppStatusAC('succeeded'))
-            } else {
-                handleServerAppError(res.data, dispatch)
-            }
-        })
-        .catch((e) => {
-            handleServerNetworkError(e, dispatch)
-        })
+    let login = await authAPI.login(data)
+    try {
+        if (login.data.resultCode === 0) {
+            dispatch(setIsLoggedInAC(true))
+            dispatch(setAppStatusAC('succeeded'))
+        } else {
+            handleServerAppError(login.data, dispatch)
+        }
+    } catch (e: any) {
+        handleServerNetworkError(e, dispatch)
+    }
 }
 
-export const initializeAppTC = (): any => (dispatch: Dispatch) => {
-    authAPI.me()
-        .then(res => {
-            if (res.data.resultCode === 0) {
-                dispatch(setIsLoggedInAC(true));
-            } else {
-                handleServerAppError(res.data, dispatch)
-            }
-            dispatch(setInitializedAC(true))
-        })
-        .catch((e) => {
-            handleServerNetworkError(e, dispatch)
-        })
+export const initializeAppTC = (): any => async (dispatch: Dispatch) => {
+    dispatch(setAppStatusAC('loading'))
+    let authMe = await authAPI.me()
+    try {
+        if (authMe.data.resultCode === 0) {
+            dispatch(setIsLoggedInAC(true));
+        } else {
+            handleServerAppError(authMe.data, dispatch)
+        }
+        dispatch(setInitializedAC(true))
+    } catch (e: any) {
+        handleServerNetworkError(e, dispatch)
+    }
 }
 
-export const logoutTC = (): any => (dispatch: Dispatch<AuthActionsType>) => {
+export const logoutTC = (): any => async (dispatch: Dispatch<AuthActionsType>) => {
     dispatch(setAppStatusAC('loading'))
-    authAPI.logout()
-        .then(res => {
-            if (res.data.resultCode === 0) {
-                dispatch(setIsLoggedInAC(false))
-                dispatch(setAppStatusAC('succeeded'))
-            } else {
-                handleServerAppError(res.data, dispatch)
-            }
-        })
-        .catch((error) => {
-            handleServerNetworkError(error, dispatch)
-        })
+    let logout = await authAPI.logout()
+    try {
+        if (logout.data.resultCode === 0) {
+            dispatch(setIsLoggedInAC(false))
+            dispatch(setAppStatusAC('succeeded'))
+        } else {
+            handleServerAppError(logout.data, dispatch)
+        }
+    } catch (e: any) {
+        handleServerNetworkError(e, dispatch)
+    }
 }
 
 

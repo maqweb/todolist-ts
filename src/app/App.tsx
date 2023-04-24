@@ -43,12 +43,9 @@ function App() {
             <AppBar position="static">
                 <Toolbar>
                     <>
-                        <IconButton edge="start" color="inherit" aria-label="menu">
-                            <Menu/>
-                        </IconButton>
-                        <Typography variant="h6">
-                            News
-                        </Typography>
+                        {/*<IconButton edge="start" color="inherit" aria-label="menu">*/}
+                        {/*    <Menu/>*/}
+                        {/*</IconButton>*/}
                         {isLoggedIn && <Button color="inherit" onClick={logoutHandler}>Log out</Button>}
                     </>
                 </Toolbar>
