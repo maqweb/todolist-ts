@@ -1,7 +1,8 @@
 import {Dispatch} from 'redux'
-import {SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType, setInitializedAC} from '../../app/app-reducer'
+import {SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType} from '../../app/app-reducer'
 import {authAPI, LoginType} from "../../api/todolist-api";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
+import {clearDataAC, ClearDataActionType} from '../TodolistsList/Todolist/todolists-reducer';
 
 const initialState = {
     isLoggedIn: false
@@ -36,20 +37,6 @@ export const loginTC = (data: LoginType): any => async (dispatch: Dispatch<AuthA
     }
 }
 
-export const initializeAppTC = (): any => async (dispatch: Dispatch) => {
-    dispatch(setAppStatusAC('loading'))
-    let authMe = await authAPI.me()
-    try {
-        if (authMe.data.resultCode === 0) {
-            dispatch(setIsLoggedInAC(true));
-        } else {
-            handleServerAppError(authMe.data, dispatch)
-        }
-        dispatch(setInitializedAC(true))
-    } catch (e: any) {
-        handleServerNetworkError(e, dispatch)
-    }
-}
 
 export const logoutTC = (): any => async (dispatch: Dispatch<AuthActionsType>) => {
     dispatch(setAppStatusAC('loading'))
@@ -58,6 +45,7 @@ export const logoutTC = (): any => async (dispatch: Dispatch<AuthActionsType>) =
         if (logout.data.resultCode === 0) {
             dispatch(setIsLoggedInAC(false))
             dispatch(setAppStatusAC('succeeded'))
+            dispatch(clearDataAC())
         } else {
             handleServerAppError(logout.data, dispatch)
         }
@@ -68,4 +56,8 @@ export const logoutTC = (): any => async (dispatch: Dispatch<AuthActionsType>) =
 
 
 // types
-type AuthActionsType = ReturnType<typeof setIsLoggedInAC> | SetAppStatusActionType | SetAppErrorActionType
+type AuthActionsType =
+    ReturnType<typeof setIsLoggedInAC>
+    | SetAppStatusActionType
+    | SetAppErrorActionType
+    | ClearDataActionType

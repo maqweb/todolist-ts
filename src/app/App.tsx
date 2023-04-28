@@ -2,19 +2,20 @@ import React, {useCallback, useEffect} from 'react'
 import './App.css';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
+// import IconButton from '@mui/material/IconButton';
+// import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-import {Menu} from '@mui/icons-material';
+// import {Menu} from '@mui/icons-material';
 import {TodolistsList} from "../features/TodolistsList/TodolistsList";
 import {CircularProgress, LinearProgress} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./store";
 import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
-import {Routes, Route, BrowserRouter, Navigate} from 'react-router-dom'
+import {Routes, Route, Navigate} from 'react-router-dom'
 import {Login} from "../features/Login/Login";
-import {initializeAppTC, logoutTC} from '../features/Login/auth-reducer';
+import { logoutTC} from '../features/Login/auth-reducer';
+import { initializeAppTC } from './app-reducer';
 
 function App() {
 
